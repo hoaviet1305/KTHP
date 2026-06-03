@@ -1,0 +1,92 @@
+﻿<Window x:Class="WpfApp1.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quản lý Sinh Viên" Height="620" Width="920"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Height" Value="28"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0,2,0,6"/>
+        </Style>
+
+        <Style TargetType="DataGridColumnHeader">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#1E3A5F"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="6,4"/>
+        </Style>
+
+        <Style x:Key="TienCellStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Margin" Value="4,0"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="12">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="0" BorderBrush="#CCCCCC" BorderThickness="1" CornerRadius="4" Padding="12,8" Margin="0,0,0,10" Background="#F8FAFC">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="150"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="180"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="160"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <Label Content="Mã SV:" Grid.Column="0" VerticalAlignment="Center" FontWeight="SemiBold"/>
+                <TextBox x:Name="txtMaSv" Grid.Column="1"/>
+
+                <Label Content="Họ Tên:" Grid.Column="2" VerticalAlignment="Center" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                <TextBox x:Name="txtHoTen" Grid.Column="3"/>
+
+                <Label Content="Số Lần XS:" Grid.Column="4" VerticalAlignment="Center" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                <TextBox x:Name="txtSoLanXs" Grid.Column="5"/>
+
+                <Label Content="Khoa:" Grid.Column="6" VerticalAlignment="Center" FontWeight="SemiBold" Margin="8,0,0,0"/>
+                <ComboBox x:Name="cboKhoa" Grid.Column="7" Height="28" Margin="0,2,0,6" DisplayMemberPath="TenKhoa" SelectedValuePath="MaKhoa"/>
+
+                <StackPanel Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="9" Orientation="Horizontal" Margin="0,4,0,0">
+                    <Button x:Name="btnThem" Content="Thêm" Click="btnThem_Click" Width="90" Height="30" Margin="0,0,8,0" Background="#1E3A5F" Foreground="White" FontWeight="Bold"/>
+                    <Button x:Name="btnTim" Content="Tìm kiếm" Click="btnTim_Click" Width="100" Height="30" Background="#2E7D32" Foreground="White" FontWeight="Bold"/>
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <DataGrid x:Name="dgDanhSach" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" SelectionMode="Single" SelectionChanged="dgDanhSach_SelectionChanged" AlternatingRowBackground="#F0F4F8" GridLinesVisibility="Horizontal" CanUserResizeRows="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Mã SV" Binding="{Binding MaSv}" Width="70"/>
+                <DataGridTextColumn Header="Họ Tên" Binding="{Binding HoTen}" Width="*"/>
+                <DataGridTextColumn Header="Số Lần XS" Binding="{Binding SoLanXs}" Width="90"/>
+                <DataGridTextColumn Header="Tên Khoa" Binding="{Binding TenKhoa}" Width="150"/>
+                <DataGridTemplateColumn Header="Tiền Thưởng" Width="120">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding TienThuong, StringFormat='{}{0:N0} đ'}" Style="{StaticResource TienCellStyle}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Window>
